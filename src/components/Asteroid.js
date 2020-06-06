@@ -6,28 +6,28 @@ class Asteroid extends Component {
         return (
             <View style={styles.container}>
                 <View style={styles.detailStyle}>
-                    <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 20 }}>Planet Details</Text>
+                    <Text style={{ fontSize: 18, textAlign: 'center', marginTop: 20 }}>Asteroid Details</Text>
                     <View style={styles.textstyle}>
-                        <Text>
-                            Name:
+                        <Text style={[styles.txtActualStyle, { marginLeft: 20 }]}>
+                            Name
                         </Text>
-                        <Text>
+                        <Text style={styles.txtActualStyle}>
                             {this.props.navigation.getParam('astData').name}
                         </Text>
                     </View>
                     <View style={styles.textstyle}>
-                        <Text>
-                            Potentially Hazardous :
+                        <Text style={[styles.txtActualStyle, { marginLeft: 20 }]}>
+                            Potentially Hazardous
                     </Text>
-                        <Text>
+                        <Text style={styles.txtActualStyle}>
                             {this.props.navigation.getParam('astData').is_potentially_hazardous_asteroid ? "true" : "false"}
                         </Text>
                     </View>
                     <View style={styles.textstyle}>
-                        <Text>
-                            NASA JPL URL :
+                        <Text style={[styles.txtActualStyle, { marginLeft: 20 }]}>
+                            NASA JPL URL
                     </Text>
-                        <Text>
+                        <Text style={styles.txtActualStyle}> 
                             {this.props.navigation.getParam('astData').nasa_jpl_url}
                         </Text>
                     </View>
@@ -55,8 +55,13 @@ const styles = StyleSheet.create({
     },
     textstyle: {
         marginTop: 20,
-        flexDirection: 'row'
-    }
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        // justifyContent:'flex-end',
+        // alignItems:'stretch'
+    },
+    txtActualStyle: { flex: 1 }
+
 })
 
 export default Asteroid;

@@ -38,7 +38,7 @@ class Home extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <Text style={styles.txtStyle}>Asteroid Details</Text>
+                <Text style={styles.txtStyle}>Search Asteroid</Text>
                 <TextInput
                     style={styles.inpStyle}
                     placeholder="Enter Asteroid ID"
