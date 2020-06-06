@@ -9,7 +9,7 @@ export function* searchAsteroid(action) {
         // console.log(`https://api.nasa.gov/neo/rest/v1/neo/${action.payload}?api_key=VGuBlkM1gXJWdqDzZy4fj6WjoLDMZ6OZV1Yfpi1L`)
         const response= yield call(
             axios.get,
-            `https://api.nasa.gov/neo/rest/v1/neo/3542519?api_key=VGuBlkM1gXJWdqDzZy4fj6WjoLDMZ6OZV1Yfpi1L`
+            `https://api.nasa.gov/neo/rest/v1/neo/${action.payload}?api_key=VGuBlkM1gXJWdqDzZy4fj6WjoLDMZ6OZV1Yfpi1L`
         )
         //`https://api.nasa.gov/neo/rest/v1/neo/${action.payload}?api_key=VGuBlkM1gXJWdqDzZy4fj6WjoLDMZ6OZV1Yfpi1L`
         // console.log('response done')
