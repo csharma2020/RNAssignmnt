@@ -6,3 +6,8 @@ export const searchAstAction=(astID)=>{
         payload:astID
     }
 }
+export const resetAstAction=()=>{
+    return{
+        type:AST_RESET
+    }
+}

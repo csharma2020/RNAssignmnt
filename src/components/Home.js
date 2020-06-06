@@ -1,11 +1,32 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity,BackHandler } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import { connect } from 'react-redux';
-import { searchAstAction } from '../actions/index';
+import { searchAstAction,resetAstAction } from '../actions/index';
 
 
 class Home extends Component {
+
+    componentDidMount() {
+        this.focusListener = this.props.navigation.addListener("didFocus", () => {
+            BackHandler.addEventListener(
+                "hardwareBackPress",
+                this.resetData,
+            );
+        });
+    }
+    resetData=()=>{
+        //alert('alerted')
+        this.setState({
+            enterAstId: '',
+            searchDisabled: true
+        });
+        this.props.resetAstData()
+    }
+
+    componentWillUnmount() {
+        this.focusListener.remove();
+    }
 
     constructor(props) {
         super(props);
@@ -39,24 +60,30 @@ class Home extends Component {
                         </Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.toStyle}>
+                <TouchableOpacity style={styles.toStyle} onPress={()=>this.randomAsteroidSearch()}>
                     <View style={styles.btnStyle}>
                         <Text>
                             Random Asteroid
                         </Text>
                     </View>
                 </TouchableOpacity>
-                {this.props.searchError!="" && <View><Text style={styles.errorStyle}>{this.props.searchError}</Text></View>}
+                {this.props.searchError != "" && <View><Text style={styles.errorStyle}>{this.props.searchError}</Text></View>}
                 <Spinner
                     visible={this.props.searching}
                     textContent={'Searching asteroid data...'}
                     textStyle={styles.spinnerTextStyle}
                 />
-                {this.props.searchCompleted && !this.props.searching && this.props.searchError=="" && this.props.navigation.navigate('Asteroid',{
-                    astData:this.props.searchResult
+                {this.props.searchCompleted && !this.props.searching && this.props.searchError == "" && this.props.navigation.navigate('Asteroid', {
+                    astData: this.props.searchResult
                 })}
             </View>
         )
+    }
+
+    randomAsteroidSearch=()=>{
+        let randomId=Math.floor(Math.random()*(1+4000000-3000000))+3000000;
+        this.props.searchAstData(randomId)
+        // alert('search random'+randomId)
     }
 }
 
@@ -94,12 +121,12 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold'
     },
-    spinnerTextStyle:{
-        color:'#fff'
+    spinnerTextStyle: {
+        color: '#fff'
     },
-    errorStyle:{
-        color:'red',
-        marginTop:10
+    errorStyle: {
+        color: 'red',
+        marginTop: 10
     }
 })
 
@@ -116,6 +143,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         searchAstData: (id) => {
             dispatch(searchAstAction(id))
+        },
+        resetAstData:()=>{
+            dispatch(resetAstAction());
         }
     }
 }
